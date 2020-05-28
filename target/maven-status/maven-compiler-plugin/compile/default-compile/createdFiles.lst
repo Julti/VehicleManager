@@ -1,0 +1,9 @@
+com\main\dao\VehiculoDAOImp.class
+com\main\dao\VehiculoDAO.class
+com\main\service\VehiculoService.class
+com\main\config\AppConfig.class
+com\main\config\WebConfig.class
+com\main\controller\VehiculoController.class
+com\main\model\Vehiculo.class
+com\main\config\MyWebAppInitializer.class
+com\main\service\VehiculoServiceImp.class

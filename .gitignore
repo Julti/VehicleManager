@@ -1,0 +1,3 @@
+src/main/resources/db.properties
+target/classes/db.properties
+target/vehicle_manager/WEB-INF/classes/db.properties
