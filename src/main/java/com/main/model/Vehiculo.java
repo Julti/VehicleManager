@@ -17,9 +17,18 @@ public class Vehiculo {
 	private long id;
 	private String placa;
 	private String marca;
+	private String filepath;
 	
+	public String getFilepath() {
+		return filepath;
+	}
+	public void setFilepath(String filepath) {
+		this.filepath = filepath;
+	}
 	@OneToMany(mappedBy="vehiculo")
 	private Set<Mantenimiento> mantenimientos;
+	@OneToMany(mappedBy="vehiculo")
+	private Set<Ruta> Rutas;
 	public Long getId() {
 		return id;
 	}

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.main.dao.VehiculoDAO;
 import com.main.dao.VehiculoDAOImp;
+import com.main.dto.QueryResponse;
 import com.main.model.Vehiculo;
 
 @Service
@@ -19,9 +20,9 @@ public class VehiculoServiceImp implements VehiculoService{
 	
 	@Override
 	@Transactional
-	public long save(Vehiculo vehiculo) {
-		VehiculoDAO.save(vehiculo);
-		return 0;
+	public QueryResponse save(Vehiculo vehiculo) {
+		QueryResponse qr =VehiculoDAO.save(vehiculo);
+		return qr;
 	}
 
 	@Override

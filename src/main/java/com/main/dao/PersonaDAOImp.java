@@ -8,40 +8,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.main.dto.QueryResponse;
-import com.main.model.Vehiculo;
+import com.main.model.Persona;
 
 @Repository
-public class VehiculoDAOImp implements VehiculoDAO{
+public class PersonaDAOImp implements PersonaDAO{
 	
 	@Autowired
 	private SessionFactory sessionFactory;
 	
 	@Override
-	public QueryResponse save(Vehiculo vehiculo) {
+	public QueryResponse save(Persona Persona) {
 		// TODO Auto-generated method stub
-		long id = (Long)sessionFactory.getCurrentSession().save(vehiculo);	
+		long id = (Long)sessionFactory.getCurrentSession().save(Persona);	
 		QueryResponse qr = new QueryResponse("Success",id);
 		return qr;
 	}
 
 	@Override
-	public Vehiculo get(long id) {
-		Vehiculo vehiculo = (Vehiculo) sessionFactory.getCurrentSession().createQuery("from Vehiculo WHERE id="+id).list().get(0);
-		return vehiculo;
+	public Persona get(long id) {
+		Persona Persona = (Persona) sessionFactory.getCurrentSession().createQuery("from Persona WHERE id="+id).list().get(0);
+		return Persona;
 	}
 
 	@Override
-	public List<Vehiculo> list() {
-		List<Vehiculo> list = sessionFactory.getCurrentSession().createQuery("from Vehiculo").list();
+	public List<Persona> list() {
+		List<Persona> list = sessionFactory.getCurrentSession().createQuery("from Persona").list();
 		return list;
 	}
 
 	@Override
-	public void update(long id, Vehiculo vehiculo) {
+	public void update(long id, Persona Persona) {
 		Session sess = sessionFactory.getCurrentSession();
-		Vehiculo toUpdate =sess.load(Vehiculo.class,id);
-		toUpdate.setMarca(vehiculo.getMarca());
-		toUpdate.setPlaca(vehiculo.getPlaca());
+		Persona toUpdate =sess.load(Persona.class,id);
+		/*toUpdate.(Persona.getMarca());
+		toUpdate.setPlaca(Persona.getPlaca());*/
 		sess.update(toUpdate);
 	}
 
