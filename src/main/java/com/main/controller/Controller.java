@@ -78,11 +78,25 @@ public class Controller {
 		List<Persona> list = PersonaService.list();
 		return ResponseEntity.ok().body(list);
 	}
+	@GetMapping("/api/persona/{id}")
+	public ResponseEntity<Persona> getPersona(@PathVariable long id){
+		Persona p = PersonaService.get(id);
+		return ResponseEntity.ok().body(p);
+	}
 	@PostMapping("/api/personas")
 	public ResponseEntity<QueryResponse> savePersona(@RequestBody Persona per){
 		System.out.println(per.toString());
 		QueryResponse value = PersonaService.save(per);
 		return ResponseEntity.ok().body(value);
 	}
-	
+	@PutMapping("/api/persona/{id}")
+	public ResponseEntity<String> updatePersona(@PathVariable long id,@RequestBody Persona persona){
+		PersonaService.update(id,persona);
+		return ResponseEntity.ok().body("Record updated successfully!");
+	}
+	@DeleteMapping("/api/persona/delete/{id}")
+	public ResponseEntity<Object> deletePersona(@PathVariable long id){
+		PersonaService.delete(id);
+		return ResponseEntity.ok().body(null);
+	}
 }
