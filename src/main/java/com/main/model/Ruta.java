@@ -10,6 +10,12 @@ import javax.persistence.ManyToOne;
 
 @Entity(name="Ruta")
 public class Ruta {
+	public Ruta(Ciudad origen, Ciudad destino, Vehiculo vehiculo, Persona conductor) {
+		this.origen = origen;
+		this.destino = destino;
+		this.vehiculo = vehiculo;
+		this.conductor = conductor;
+	}
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "ID")

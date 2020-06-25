@@ -13,12 +13,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.main.dto.MantenimientoDTO;
 import com.main.dto.QueryResponse;
+import com.main.dto.RutasDTO;
+import com.main.model.Ciudad;
 import com.main.model.Mantenimiento;
 import com.main.model.Persona;
+import com.main.model.Ruta;
 import com.main.model.Vehiculo;
+import com.main.service.CiudadService;
 import com.main.service.MantenimientoService;
 import com.main.service.PersonaService;
+import com.main.service.RutaService;
 import com.main.service.VehiculoService;
 
 @RestController
@@ -30,6 +36,10 @@ public class Controller {
 	private MantenimientoService MantenimientoService;
 	@Autowired
 	private PersonaService PersonaService;
+	@Autowired
+	private CiudadService CiudadService;
+	@Autowired
+	private RutaService RutaService;
 	@CrossOrigin
 	@GetMapping("/api/vehiculos")
 	public ResponseEntity<List<Vehiculo>> getVehiculos(){
@@ -68,9 +78,10 @@ public class Controller {
 		return ResponseEntity.ok().body(m);
 	}
 	@PostMapping("/api/mantenimientos")
-	public ResponseEntity<Long> saveMantenimiento(@RequestBody Mantenimiento mant){
-		
-		long value = MantenimientoService.save(mant);
+	public ResponseEntity<Long> saveMantenimiento(@RequestBody MantenimientoDTO mant){
+		Vehiculo v = VehiculoService.get(mant.getVehiculoId());
+		Mantenimiento m = new Mantenimiento(mant.getDetails(),mant.getFecha(),mant.getCosto(),v);
+		long value = MantenimientoService.save(m);
 		return ResponseEntity.ok().body(value);
 	}
 	@GetMapping("/api/personas")
@@ -98,5 +109,15 @@ public class Controller {
 	public ResponseEntity<Object> deletePersona(@PathVariable long id){
 		PersonaService.delete(id);
 		return ResponseEntity.ok().body(null);
+	}
+	@PostMapping("/api/rutas")
+	public ResponseEntity<Long> saveRutas(@RequestBody RutasDTO ruta){
+		Vehiculo v = VehiculoService.get(ruta.idVehiculo);
+		Persona p = PersonaService.get(ruta.idConductor);
+		Ciudad origen = CiudadService.get(ruta.idOrigen);
+		Ciudad destino = CiudadService.get(ruta.idDestino);
+		Ruta r = new Ruta(origen,destino,v,p);
+		long value = RutaService.save(r);
+		return ResponseEntity.ok().body(value);
 	}
 }
