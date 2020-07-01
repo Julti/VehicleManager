@@ -1,6 +1,8 @@
 package com.main.controller;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.main.dto.MantenimientoDTO;
+import com.main.dto.PersonaDTO;
 import com.main.dto.QueryResponse;
 import com.main.dto.RutasDTO;
 import com.main.model.Ciudad;
@@ -84,10 +87,11 @@ public class Controller {
 		long value = MantenimientoService.save(m);
 		return ResponseEntity.ok().body(value);
 	}
+	@CrossOrigin
 	@GetMapping("/api/personas")
-	public ResponseEntity<List<Persona>> getPersonas(){
+	public ResponseEntity<List<PersonaDTO>> getPersonas(){
 		List<Persona> list = PersonaService.list();
-		return ResponseEntity.ok().body(list);
+		return ResponseEntity.ok().body(list.stream().map(this::personToPersonDto).collect(Collectors.toList()));
 	}
 	@GetMapping("/api/persona/{id}")
 	public ResponseEntity<Persona> getPersona(@PathVariable long id){
@@ -119,5 +123,20 @@ public class Controller {
 		Ruta r = new Ruta(origen,destino,v,p);
 		long value = RutaService.save(r);
 		return ResponseEntity.ok().body(value);
+	}
+	@GetMapping("/api/rutas")
+	public ResponseEntity<List<Ruta>> getRutas(){
+		List<Ruta> list = RutaService.list();
+		return ResponseEntity.ok().body(list);
+	}
+	private PersonaDTO personToPersonDto(Persona p) {
+		PersonaDTO pdto = new PersonaDTO();
+		pdto.setAge(p.getAge());
+		pdto.setId(p.getId());
+		pdto.setName(p.getName());
+		pdto.setLastname(p.getLastname());
+		pdto.setDocumentNumber(p.getDocumentNumber());
+		pdto.setPersontype(p.getPersontype().getDescription());
+		return pdto;
 	}
 }
