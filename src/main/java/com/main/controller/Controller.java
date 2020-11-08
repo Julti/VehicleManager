@@ -60,6 +60,7 @@ public class Controller {
 		VehiculoService.delete(id);
 		return ResponseEntity.ok().body(null);
 	}
+	@CrossOrigin
 	@PostMapping("/api/vehiculos")
 	public ResponseEntity<QueryResponse> saveVehiculo(@RequestBody Vehiculo vehiculo){
 		QueryResponse value = VehiculoService.save(vehiculo);
@@ -70,6 +71,7 @@ public class Controller {
 		VehiculoService.update(id,vehiculo);
 		return ResponseEntity.ok().body("Record updated successfully!");
 	}
+	@CrossOrigin
 	@GetMapping("/api/mantenimientos")
 	public ResponseEntity<List<Mantenimiento>> getMantenimientos(){
 		List<Mantenimiento> list = MantenimientoService.list();
